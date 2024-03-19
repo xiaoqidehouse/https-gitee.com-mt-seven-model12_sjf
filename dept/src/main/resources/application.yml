@@ -1,9 +1,9 @@
 server:
-  port: 8666
+  port: 8667
 
 spring:
   application:
-    name: user    # 注册导eureka上面的应用名称
+    name: dept    # 注册导eureka上面的应用名称
   # 数据源
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,4 +1,4 @@
-package com.bw.config;
+package com.wqy.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 //注意， 这里配置适合mybatis-plus 3.5.2版本
-@MapperScan("com.bw.mapper")
+@MapperScan("com.wqy.mapper")
 @Configuration
 public class MyBatisConfig {
 

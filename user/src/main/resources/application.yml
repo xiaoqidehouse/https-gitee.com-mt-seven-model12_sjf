@@ -3,13 +3,20 @@ server:
 
 spring:
   application:
-    name: qj    # 注册导eureka上面的应用名称
+    name: user    # 注册导eureka上面的应用名称
   # 数据源
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/yue1?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/springboot0312?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 1999
+  # 邮件配置
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 874649276@qq.com
+    password: dmqdivdgohvobeia      # 授权码
+    protocol: smtp
 
   # 图片上传配置
   servlet:
@@ -50,6 +57,16 @@ pdf:
   sign-pic-name: sign.png
   path: D:\pdf\
   font: D:\pdf\font\simsun.ttc  #字体
+
+
+
+---
+sms:
+  apiUrl: https://sms_developer.zhenzikj.com
+  appId: 113037
+  appSecret: 5c4d0b8a-60f6-4790-a6fc-2313120258d9
+
+
 
 ---
 ##kafka发送消息

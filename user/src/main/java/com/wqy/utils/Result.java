@@ -1,4 +1,4 @@
-package com.bw.utils;
+package com.wqy.utils;
 
 import java.io.Serializable;
 //统一响应结果集

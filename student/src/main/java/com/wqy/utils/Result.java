@@ -1,8 +1,9 @@
 package com.wqy.utils;
 
 import java.io.Serializable;
+
 //统一响应结果集
-public class Result  implements Serializable {
+public class Result implements Serializable {
 
     private Integer code;
     private String msg;

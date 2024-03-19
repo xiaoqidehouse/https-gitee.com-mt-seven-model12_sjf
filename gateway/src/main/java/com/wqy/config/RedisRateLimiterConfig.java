@@ -1,4 +1,4 @@
-package com.bw.config;
+package com.wqy.config;
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;

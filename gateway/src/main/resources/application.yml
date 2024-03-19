@@ -17,7 +17,7 @@ spring:
       routes:
         - id: contract
           #          uri: http://localhost:8083  #直接指定服务器地址，不推荐
-          uri: lb://hetong # 指定服务器注册实例名
+          uri: lb://user # 指定服务器注册实例名
           filters: #对请求进行进一步处理
             - StripPrefix=1 # 去掉前缀过滤器
 #            - name: RequestRateLimiter
@@ -27,7 +27,7 @@ spring:
 #                redis-rate-limiter.requestedTokens: 20 #每次请求消耗几个令牌
 #                key-resolver: "#{@userKeyResolver}" # 根据userName来限流
           predicates: #断言
-            - Path=/hetong/**  # 如果访问路径以services开头，则执行本路由规则
+            - Path=/user/**  # 如果访问路径以services开头，则执行本路由规则
         #            - After=2022-12-24T16:30:00+08:00[Asia/Shanghai]
 
 

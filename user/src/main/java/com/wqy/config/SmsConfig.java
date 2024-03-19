@@ -1,4 +1,4 @@
-package com.ff.config;
+package com.wqy.config;
 
 import com.zhenzi.sms.ZhenziSmsClient;
 import org.springframework.beans.factory.annotation.Value;
