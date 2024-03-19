@@ -1,0 +1,22 @@
+server:
+  port: 8848
+
+spring:
+  application:
+    name: bweureka
+
+#  security:
+#    user:
+#      name: admin
+#      password: 123456
+
+
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    fetch-registry: true #是否从注册中⼼获取注册表
+    register-with-eureka: true #是否要注册到注册中⼼
+    service-url:
+      defaultZone: http://localhost:8848/eureka

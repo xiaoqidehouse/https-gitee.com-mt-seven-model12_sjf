@@ -1,0 +1,16 @@
+server:
+  port: 8841
+#配置文件中可以配置
+eureka:
+  instance:
+    hostname: node1 #实例名称 主机的名称 windows/system32/drivers/etc/hosts文件  127.0.0.1  replica1
+  server:
+    enable-self-preservation: true #注册自己
+  client:
+    fetch-registry: true #可以被发现eureka
+    register-with-eureka: true #注册上
+    service-url:
+      defaultZone: http://node1:8841/eureka/,http://node2:8842/eureka/,http://node3:8843/eureka/
+spring:
+  application:
+    name: bweureka #注册到eureka上面的应用名称

@@ -1,0 +1,88 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: gateway
+  redis:
+    host: localhost
+    port: 6379
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 0.9 # 设置Sleuth抽样收集的概率
+  cloud:
+    gateway:
+      routes:
+        - id: contract
+          #          uri: http://localhost:8083  #直接指定服务器地址，不推荐
+          uri: lb://hetong # 指定服务器注册实例名
+          filters: #对请求进行进一步处理
+            - StripPrefix=1 # 去掉前缀过滤器
+#            - name: RequestRateLimiter
+#              args:
+#                redis-rate-limiter.replenishRate: 1 # 放令牌的速率
+#                redis-rate-limiter.burstCapacity: 2 # 令牌桶最大放多少个
+#                redis-rate-limiter.requestedTokens: 20 #每次请求消耗几个令牌
+#                key-resolver: "#{@userKeyResolver}" # 根据userName来限流
+          predicates: #断言
+            - Path=/hetong/**  # 如果访问路径以services开头，则执行本路由规则
+        #            - After=2022-12-24T16:30:00+08:00[Asia/Shanghai]
+
+
+        - id: router2
+          uri: lb://shopuser # 指定服务器注册实例名
+          filters: #对请求进行进一步处理
+            - StripPrefix=1 # 去掉前缀过滤器
+          predicates: #断言
+            - Path=/shopuser/**  # 如果访问路径以services开头，则执行本路由规则
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            maxAge: 360000
+
+
+#顶格放
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true # 注册到eureka
+    fetch_registry: true #从服务器获取注册信息
+    service-url:
+      defaultZone:  http://localhost:8848/eureka # 注册中心地址
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+logging:
+  file: # 开启admin的日志监控
+    name: admin-client.log
+
+
+#@Configuration
+#public class RedisRateLimiterConfig {
+
+#    @Bean
+#    KeyResolver userKeyResolver() {
+#        return new KeyResolver(){
+
+#            @Override
+#            public Mono<String> resolve(ServerWebExchange exchange) {
+#                return Mono.just(exchange.getRequest().getQueryParams().getFirst("userName"));
+#            }
+#        };
+#    }
+#}

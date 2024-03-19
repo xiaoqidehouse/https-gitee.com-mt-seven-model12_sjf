@@ -1,0 +1,98 @@
+server:
+  port: 8666
+
+spring:
+  application:
+    name: qj    # 注册导eureka上面的应用名称
+  # 数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/yue1?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1999
+
+  # 图片上传配置
+  servlet:
+    multipart:
+      max-file-size: 1024MB #1次性上传数据量
+      max-request-size: 1024MB #单个文件上传的大
+      enabled: true
+
+  # eureka配置
+eureka:
+    client:
+      fetch-registry: true    # 是否被发现
+      register-with-eureka: true      # 是否注册
+      service-url:
+        defaultZone: http://localhost:8848/eureka # 注册中心地址
+
+# mybatis plus配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#大文件上传配置
+file:
+  domain: http://localhost:${server.port}/
+  path: D:/pic/
+  enable: true
+
+pdf:
+  enable: true
+  domain: http://localhost:${server.port}/
+  pdf-ks: D:\pdf\wangqiaoyi
+  pdf-ks-pass: 123456
+  x: 300
+  y: 400
+  width: 100
+  height: 100
+  sign-pic-name: sign.png
+  path: D:\pdf\
+  font: D:\pdf\font\simsun.ttc  #字体
+
+---
+##kafka发送消息
+spring:
+  profiles:
+    active: roter
+  kafka:
+    # 指定kafka 代理地址，可以多个
+    bootstrap-servers: 192.168.119.128:9092
+    ##=============== provider  =======================
+    producer:
+      acks: 1
+      retries: 1
+      # 每次批量发送消息的数量
+      batch-size: 16384
+      buffer-memory: 3355443
+      #指定消息key和消息体的编解码方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  application:
+    name: kafka
+---
+##kafka接受消息
+spring:
+  application:
+    name: consumer
+  kafka:
+    bootstrap-servers: 192.168.119.128:9092
+    ##=============== consumer  =======================
+    #此处是消费者发送消息不丢失:
+    # 消费方丢失的情况，是因为在消费过程中出现了异常，但是 对应消息的 offset 已经提交，那么消费异常的消息将会丢失。
+    #    offset的提交包括手动提交和自动提交，可通过kafka.consumer.enable-auto-commit进行配置。
+    #    手动提交可以灵活的确认是否将本次消费数据的offset进行提交，可以很好的避免消息丢失的情况。
+    #    自动提交是引起数据丢失的主要诱因。因为消息的消费并不会影响到offset的提交。
+    #关闭自动提交,
+    consumer:
+      enable-auto-commit: false
+      ## 指定默认消费者group id
+      group-id: test-consumer-group
+      # 当前时间开始收:earliest翻译:最早的 latest翻译:最迟的
+      auto-offset-reset: latest
+      auto-commit-interval: 100
+      ## 指定消息key和消息体的编解码方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  profiles: roter

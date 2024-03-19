@@ -1,0 +1,7 @@
+#spring:
+#  cloud:
+#    config: # house-dev.yml
+#      profile: dev # 指定开发环境，还可以是test product等。
+#      label: master # git分支
+#      uri: http://localhost:8848  #config 服务地址
+#      name: blank  #blank-dev.yml
